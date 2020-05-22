@@ -27,15 +27,12 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_main);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
-                    int PERMISSION_ALL = 1;
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
-                } else {
-                    openActivity();
-                }
+        new Handler().postDelayed(() -> {
+            if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
+                int PERMISSION_ALL = 1;
+                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
+            } else {
+                openActivity();
             }
         }, 1000);
     }
