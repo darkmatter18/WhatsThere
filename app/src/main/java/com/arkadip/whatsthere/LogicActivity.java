@@ -1,23 +1,26 @@
 package com.arkadip.whatsthere;
 
-import androidx.annotation.NonNull;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,6 +30,8 @@ public class LogicActivity extends AppCompatActivity {
     private PreviewView previewView;
 
     private ExecutorService cameraExecutor;
+    private Classifier classifier;
+    private JSONObject outJson;
 
     private Camera camera;
     private ProcessCameraProvider cameraProvider;
@@ -40,6 +45,13 @@ public class LogicActivity extends AppCompatActivity {
         cameraExecutor = Executors.newSingleThreadExecutor();
         previewView = findViewById(R.id.preview_view);
 
+        classifier = new Classifier(Utils.assetFilePath(this, "mobilenet-v2.pt"));
+
+        try {
+            outJson = new JSONObject(Objects.requireNonNull(Utils.loadJSONFromAsset(this, "imagenet_class_index.json")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         previewView.post(this::setupCamera);
     }
@@ -50,7 +62,7 @@ public class LogicActivity extends AppCompatActivity {
         cameraExecutor.shutdown();
     }
 
-    private void setupCamera(){
+    private void setupCamera() {
         cameraProviderListenableFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderListenableFuture.addListener(() -> {
             try {
@@ -63,6 +75,7 @@ public class LogicActivity extends AppCompatActivity {
         }, ContextCompat.getMainExecutor(this));
     }
 
+    @SuppressLint("UnsafeExperimentalUsageError")
     private void bindCameraUsecases() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         previewView.getDisplay().getRealMetrics(displayMetrics);
@@ -92,7 +105,14 @@ public class LogicActivity extends AppCompatActivity {
                 .build();
 
         imageAnalysis.setAnalyzer(cameraExecutor, image -> {
-
+            int r = image.getImageInfo().getRotationDegrees();
+            int value = classifier.predict(image.getImage(), r);
+            Log.d("OUTPUT", String.valueOf(value));
+            try {
+                Log.d("JSON",outJson.getString(String.valueOf(value)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             image.close();
         });
 
