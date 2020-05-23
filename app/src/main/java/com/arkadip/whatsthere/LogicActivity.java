@@ -1,10 +1,14 @@
 package com.arkadip.whatsthere;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Size;
+import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
@@ -28,12 +32,12 @@ import java.util.concurrent.Executors;
 public class LogicActivity extends AppCompatActivity {
 
     private PreviewView previewView;
+    private TextView textView;
 
     private ExecutorService cameraExecutor;
     private Classifier classifier;
     private JSONObject outJson;
 
-    private Camera camera;
     private ProcessCameraProvider cameraProvider;
     private ListenableFuture<ProcessCameraProvider> cameraProviderListenableFuture;
 
@@ -43,7 +47,9 @@ public class LogicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logic);
 
         cameraExecutor = Executors.newSingleThreadExecutor();
+
         previewView = findViewById(R.id.preview_view);
+        textView = findViewById(R.id.textView);
 
         classifier = new Classifier(Utils.assetFilePath(this, "mobilenet-v2.pt"));
 
@@ -62,6 +68,7 @@ public class LogicActivity extends AppCompatActivity {
         cameraExecutor.shutdown();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void setupCamera() {
         cameraProviderListenableFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderListenableFuture.addListener(() -> {
@@ -100,7 +107,8 @@ public class LogicActivity extends AppCompatActivity {
 
         //Image Analysis
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .setTargetAspectRatio(aspectRatio)
+                .setTargetResolution(new Size(224, 224))
+                //.setTargetAspectRatio(aspectRatio)
                 .setTargetRotation(rotation)
                 .build();
 
@@ -109,7 +117,9 @@ public class LogicActivity extends AppCompatActivity {
             int value = classifier.predict(image.getImage(), r);
             Log.d("OUTPUT", String.valueOf(value));
             try {
-                Log.d("JSON",outJson.getString(String.valueOf(value)));
+                String out = outJson.getString(String.valueOf(value));
+                runOnUiThread(() -> textView.setText(out));
+                Log.d("JSON",out);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -119,7 +129,7 @@ public class LogicActivity extends AppCompatActivity {
         // Must unbind the use-cases before rebinding them
         cameraProvider.unbindAll();
 
-        camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
+        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
         preview.setSurfaceProvider(previewView.createSurfaceProvider(camera.getCameraInfo()));
     }
 

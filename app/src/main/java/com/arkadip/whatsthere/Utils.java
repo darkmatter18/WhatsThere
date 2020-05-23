@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 class Utils {
+
     static String assetFilePath(Context context, String assetName) {
         File file = new File(context.getFilesDir(), assetName);
 
@@ -48,7 +49,7 @@ class Utils {
         return null;
     }
 
-    static String loadJSONFromAsset(Context context, String JSONname){
+    static String loadJSONFromAsset(Context context, String JSONname) {
         String json;
         try {
             InputStream is = context.getAssets().open(JSONname);

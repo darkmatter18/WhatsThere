@@ -31,8 +31,8 @@ class Classifier {
     }
 
     private Tensor preprocessor(Image image, int rotation) {
-        return TensorImageUtils.imageYUV420CenterCropToFloat32Tensor(image, rotation, 28,
-                28, TensorImageUtils.TORCHVISION_NORM_MEAN_RGB, TensorImageUtils.TORCHVISION_NORM_STD_RGB);
+        return TensorImageUtils.imageYUV420CenterCropToFloat32Tensor(image, rotation, 224,
+                224, TensorImageUtils.TORCHVISION_NORM_MEAN_RGB, TensorImageUtils.TORCHVISION_NORM_STD_RGB);
     }
 
     private int argMax(float[] inputs) {
