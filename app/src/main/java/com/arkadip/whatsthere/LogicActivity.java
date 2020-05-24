@@ -1,14 +1,13 @@
 package com.arkadip.whatsthere;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
@@ -30,13 +29,16 @@ public class LogicActivity extends AppCompatActivity {
 
     private PreviewView previewView;
     private TextView textView;
+    private ToggleButton toggleButton;
 
     private ExecutorService cameraExecutor;
     private Classifier classifier;
 
     private ProcessCameraProvider cameraProvider;
     private ListenableFuture<ProcessCameraProvider> cameraProviderListenableFuture;
+    private Camera camera;
 
+    private boolean flashMode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +48,18 @@ public class LogicActivity extends AppCompatActivity {
 
         previewView = findViewById(R.id.preview_view);
         textView = findViewById(R.id.textView);
+        toggleButton = findViewById(R.id.flashToggle);
+
+        flashMode = toggleButton.isChecked();
 
         classifier = new Classifier(Utils.assetFilePath(this, "mobilenet-v2.pt"));
+        camera.getCameraControl().enableTorch(flashMode);
+
+        toggleButton.setOnClickListener(v -> {
+            flashMode = toggleButton.isChecked();
+            Log.d("TAG", "Toggled to: "+ flashMode);
+            camera.getCameraControl().enableTorch(flashMode);
+        });
 
         previewView.post(this::setupCamera);
     }
@@ -58,7 +70,6 @@ public class LogicActivity extends AppCompatActivity {
         cameraExecutor.shutdown();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void setupCamera() {
         cameraProviderListenableFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderListenableFuture.addListener(() -> {
@@ -68,13 +79,12 @@ public class LogicActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            bindCameraUsecases();
+            bindCameraUseCases();
         }, ContextCompat.getMainExecutor(this));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     @SuppressLint({"UnsafeExperimentalUsageError", "Assert"})
-    private void bindCameraUsecases() {
+    private void bindCameraUseCases() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         previewView.getDisplay().getRealMetrics(displayMetrics);
         Log.d("DISPLAY", "Screen metrics: " + displayMetrics.widthPixels
@@ -105,7 +115,6 @@ public class LogicActivity extends AppCompatActivity {
 
         imageAnalysis.setAnalyzer(cameraExecutor, image -> {
             int r = image.getImageInfo().getRotationDegrees();
-            Log.d("IMAGE", String.valueOf(r));
             int value = classifier.predict(image.getImage(), r);
             Log.d("OUTPUT", String.valueOf(value));
             String out = Utils.IMAGENET_CLASSES[value];
@@ -117,7 +126,7 @@ public class LogicActivity extends AppCompatActivity {
         // Must unbind the use-cases before rebinding them
         cameraProvider.unbindAll();
 
-        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
+        camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
         preview.setSurfaceProvider(previewView.createSurfaceProvider(camera.getCameraInfo()));
     }
 
