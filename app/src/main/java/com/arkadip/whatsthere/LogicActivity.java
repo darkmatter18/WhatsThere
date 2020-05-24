@@ -21,10 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +33,6 @@ public class LogicActivity extends AppCompatActivity {
 
     private ExecutorService cameraExecutor;
     private Classifier classifier;
-    private JSONObject outJson;
 
     private ProcessCameraProvider cameraProvider;
     private ListenableFuture<ProcessCameraProvider> cameraProviderListenableFuture;
@@ -52,12 +48,6 @@ public class LogicActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
 
         classifier = new Classifier(Utils.assetFilePath(this, "mobilenet-v2.pt"));
-
-        try {
-            outJson = new JSONObject(Objects.requireNonNull(Utils.loadJSONFromAsset(this, "imagenet_class_index.json")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         previewView.post(this::setupCamera);
     }
@@ -82,7 +72,8 @@ public class LogicActivity extends AppCompatActivity {
         }, ContextCompat.getMainExecutor(this));
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @SuppressLint({"UnsafeExperimentalUsageError", "Assert"})
     private void bindCameraUsecases() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         previewView.getDisplay().getRealMetrics(displayMetrics);
@@ -114,15 +105,12 @@ public class LogicActivity extends AppCompatActivity {
 
         imageAnalysis.setAnalyzer(cameraExecutor, image -> {
             int r = image.getImageInfo().getRotationDegrees();
+            Log.d("IMAGE", String.valueOf(r));
             int value = classifier.predict(image.getImage(), r);
             Log.d("OUTPUT", String.valueOf(value));
-            try {
-                String out = outJson.getString(String.valueOf(value));
-                runOnUiThread(() -> textView.setText(out));
-                Log.d("JSON",out);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            String out = Utils.IMAGENET_CLASSES[value];
+            runOnUiThread(() -> textView.setText(out));
+
             image.close();
         });
 
