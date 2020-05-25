@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Arkadip Bhattacharya
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.arkadip.whatsthere;
 
 import android.annotation.SuppressLint;
@@ -20,7 +36,6 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
-
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -125,25 +140,23 @@ public class LogicActivity extends AppCompatActivity {
         toggleFlash();
     }
 
-    private void toggleFlash(){
+    private void toggleFlash() {
         toggleButton.setOnClickListener(v -> {
             try {
-                if (camera.getCameraInfo().hasFlashUnit()){
+                if (camera.getCameraInfo().hasFlashUnit()) {
                     boolean flashOn = ((ToggleButton) v).isChecked();
                     int torchState = camera.getCameraInfo().getTorchState().getValue();
                     if (flashOn) {
-                        if(torchState != TorchState.ON){
+                        if (torchState != TorchState.ON) {
                             camera.getCameraControl().enableTorch(true);
                         }
-                    }
-                    else {
-                        if(torchState != TorchState.OFF){
+                    } else {
+                        if (torchState != TorchState.OFF) {
                             camera.getCameraControl().enableTorch(false);
                         }
                     }
                 }
-            }
-            catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         });
