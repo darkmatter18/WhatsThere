@@ -14,6 +14,7 @@ import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
+import androidx.camera.core.TorchState;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -38,7 +39,6 @@ public class LogicActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderListenableFuture;
     private Camera camera;
 
-    private boolean flashMode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +50,9 @@ public class LogicActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         toggleButton = findViewById(R.id.flashToggle);
 
-        flashMode = toggleButton.isChecked();
+        toggleButton.setChecked(false);
 
         classifier = new Classifier(Utils.assetFilePath(this, "mobilenet-v2.pt"));
-        camera.getCameraControl().enableTorch(flashMode);
-
-        toggleButton.setOnClickListener(v -> {
-            flashMode = toggleButton.isChecked();
-            Log.d("TAG", "Toggled to: "+ flashMode);
-            camera.getCameraControl().enableTorch(flashMode);
-        });
 
         previewView.post(this::setupCamera);
     }
@@ -128,6 +121,32 @@ public class LogicActivity extends AppCompatActivity {
 
         camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
         preview.setSurfaceProvider(previewView.createSurfaceProvider(camera.getCameraInfo()));
+
+        toggleFlash();
+    }
+
+    private void toggleFlash(){
+        toggleButton.setOnClickListener(v -> {
+            try {
+                if (camera.getCameraInfo().hasFlashUnit()){
+                    boolean flashOn = ((ToggleButton) v).isChecked();
+                    int torchState = camera.getCameraInfo().getTorchState().getValue();
+                    if (flashOn) {
+                        if(torchState != TorchState.ON){
+                            camera.getCameraControl().enableTorch(true);
+                        }
+                    }
+                    else {
+                        if(torchState != TorchState.OFF){
+                            camera.getCameraControl().enableTorch(false);
+                        }
+                    }
+                }
+            }
+            catch (NullPointerException e){
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
