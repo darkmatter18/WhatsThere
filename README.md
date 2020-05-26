@@ -1,6 +1,6 @@
 # WhatsThere
 
-[![](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=vue.js&logoColor=white)](https://github.com/darkmatter18/WhatsThere/releases/latest/WhatsThere.apk)
+[![](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=vue.js&logoColor=white)](https://github.com/darkmatter18/WhatsThere/releases/latest/download/WhatsThere.apk)
 
 ![](https://github.com/darkmatter18/WhatsThere/workflows/Android%20CI/badge.svg)
 [![GitHub Forks](https://img.shields.io/github/forks/darkmatter18/WhatsThere?style=flat-square)](https://github.com/darkmatter18/WhatsThere/network/members)
