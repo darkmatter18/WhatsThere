@@ -1,5 +1,7 @@
 # WhatsThere
 
+[![](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=vue.js&logoColor=white)](https://github.com/darkmatter18/WhatsThere/releases/latest/WhatsThere.apk)
+
 ![](https://github.com/darkmatter18/WhatsThere/workflows/Android%20CI/badge.svg)
 [![GitHub Forks](https://img.shields.io/github/forks/darkmatter18/WhatsThere?style=flat-square)](https://github.com/darkmatter18/WhatsThere/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/darkmatter18/WhatsThere?style=flat-square)](https://github.com/darkmatter18/WhatsThere/issues)
@@ -12,8 +14,6 @@ An Android Application, which can `sence` and `classify` Real objects and can te
 
 The App is created on top of `Deep Learning` and `Aritificial Neural Networks`.
 **`WhatsThere`** is a great example, that how `Artificial Inteligence` can do a lot of job without any Human interfare.
-
-> Download the app from [**Here**](https://github.com/darkmatter18/WhatsThere/releases/download/1.2/WhatsThere-v1.2.apk)
 
 ## Features
 
