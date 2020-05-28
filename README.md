@@ -8,7 +8,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/darkmatter18/WhatsThere?color=important&style=flat-square)](https://github.com/darkmatter18/WhatsThere/stargazers)
 [![GitHub license](https://img.shields.io/github/license/darkmatter18/WhatsThere?style=flat-square)](https://github.com/darkmatter18/WhatsThere/blob/master/LICENSE)
 
-<img src="./images/logobig.png" alt="App Splash Screen" height="400"/>
+<p align="center">
+    <img src="./images/logomid.png" alt="App Splash Screen" height="400"/>
+</p>
 
 An Android Application, which can `sence` and `classify` Real objects and can tell, what the object is.
 
