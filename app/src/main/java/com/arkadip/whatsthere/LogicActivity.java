@@ -140,6 +140,7 @@ public class LogicActivity extends AppCompatActivity {
         toggleFlash();
     }
 
+
     private void toggleFlash() {
         toggleButton.setOnClickListener(v -> {
             try {
