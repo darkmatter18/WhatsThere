@@ -135,7 +135,7 @@ public class LogicActivity extends AppCompatActivity {
         cameraProvider.unbindAll();
 
         camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
-        preview.setSurfaceProvider(previewView.createSurfaceProvider(camera.getCameraInfo()));
+        preview.setSurfaceProvider(previewView.createSurfaceProvider());
 
         toggleFlash();
     }
