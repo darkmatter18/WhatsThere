@@ -13,8 +13,8 @@ next to their day job; you are not entitled to free customer service.
 
 ## Contributions
 
-See [`contributing.md`](contributing) on how to contribute.
+See [`contributing.md`](https://github.com/darkmatter18/WhatsThere/CONTRIBUTING.md) on how to contribute.
 
 ## License
 
-[Apache-2.0](license) © [Arkadip Bhattacharya](author)
+[Apache-2.0](https://github.com/darkmatter18/WhatsThere/LICENSE) © [Arkadip Bhattacharya](https://github.com/darkmatter18)
