@@ -1,6 +1,6 @@
 # Support
 
-> This project has a [Code of Conduct][coc].
+> This project has a [Code of Conduct](coc).
 > By interacting with this repository, organisation, or community you agree to
 > abide by its terms.
 
@@ -13,8 +13,8 @@ next to their day job; you are not entitled to free customer service.
 
 ## Contributions
 
-See [`contributing.md`][contributing] on how to contribute.
+See [`contributing.md`](contributing) on how to contribute.
 
 ## License
 
-[Apache-2.0][license] © [Arkadip Bhattacharya][author]
+[Apache-2.0](license) © [Arkadip Bhattacharya](author)
