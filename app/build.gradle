@@ -11,7 +11,7 @@ android {
         versionCode 1
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionName '1.2.5'
+        versionName '1.2.6'
     }
 
     buildTypes {
