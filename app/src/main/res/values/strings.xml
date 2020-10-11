@@ -4,4 +4,5 @@
     <string name="w_h_a_t_s_t_h_e_r_e">W H A T S T H E R E</string>
     <string name="by">By</string>
     <string name="dev_name">Arkadip</string>
+    <string name="error_msg_permssion_required">Please provide required permission to cotinue!</string>
 </resources>
