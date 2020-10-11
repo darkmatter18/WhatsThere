@@ -35,11 +35,11 @@ The App is created on top of `Deep Learning` and `Aritificial Neural Networks`.
 
 [![Android](https://forthebadge.com/images/badges/built-for-android.svg)]()
 [![PyTorch](https://img.shields.io/badge/Powered%20By-PyTorch-orange?style=for-the-badge&logo=pytorch)]()
-[![JAVA](https://forthebadge.com/images/badges/made-with-java.svg)]()
+[![KOTLIN](https://img.shields.io/badge/Made%20with-Kotlin-blue?style=for-the-badge&logo=kotlin)]()
 
 - The App is created for and only for **`Android`**, `2 minutes of silence for other platforms`
 - To power-up the Deepest Neural Network, the App uses **`PyTorch`**
-- Written in *`Shuddh`* **`JAVA`**
+- Written in *`Shuddh`* **`KOTLIN`**
 - Uses [**`CameraX`**](https://developer.android.com/training/camerax) to Capture frames
 
 ## Neural Network
