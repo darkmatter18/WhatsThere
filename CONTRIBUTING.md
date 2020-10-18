@@ -1,5 +1,5 @@
 # Contributing
-🎊 👍 👍 Thank you for choosing to ontribute  to this project 👍 👍 🎊
+🎊 👍 👍 Thank you for choosing to contribute  to this project 👍 👍 🎊
 We cherish your contributions, and want to make your contributing to this project smooth and transparent.
 
 - When contributing to this repository, please first discuss the change you wish to make via issue,
