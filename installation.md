@@ -2,7 +2,7 @@
 
 ## Installation Guideline
 
-1. Download the latest Application from [Here](https://github.com/darkmatter18/WhatsThere/releases/latest/download/WhatsThere.apk)
+1. Download the latest version of the application from [here](https://github.com/darkmatter18/WhatsThere/releases/latest/download/WhatsThere.apk)
 
 2. Make sure you have turned on **Allow Installation from Unknown Sources**. If you didn't do that, Android will prompt you to do so.
 
@@ -30,8 +30,9 @@ A copy of the App will be send to Google. It would help in reconsidering the sta
 	
 6. Now the app should be installed and work properly.
 
-## Troubleshooting
 
+
+## Troubleshooting
 
 
 > ***Need help?***
