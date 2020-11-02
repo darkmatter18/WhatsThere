@@ -44,7 +44,7 @@ dependencies {
     implementation 'androidx.camera:camera-lifecycle:1.0.0-beta11'
     implementation 'androidx.camera:camera-view:1.0.0-alpha15'
     implementation 'org.pytorch:pytorch_android:1.7.0'
-    implementation 'org.pytorch:pytorch_android_torchvision:1.6.0'
+    implementation 'org.pytorch:pytorch_android_torchvision:1.7.0'
 }
 repositories {
     mavenCentral()
