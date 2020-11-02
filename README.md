@@ -13,17 +13,17 @@
     <img src="./images/logomid.png" alt="App Splash Screen" height="400"/>
 </p>
 
-An Android Application, which can `sence` and `classify` Real objects and can tell, what the object is.
+An Android Application, which can `sense` and `classify` objects in Real time.
 
-The App is created on top of `Deep Learning` and `Aritificial Neural Networks`.
-**`WhatsThere`** is a great example, that how `Artificial Inteligence` can do a lot of job without any Human interfare.
+The App is created using the concepts of `Deep Learning` and `Artificial Neural Networks`.
+**`WhatsThere`** is a great example, that how `Artificial Intelligence` can do a lot without human interference.
 
 ## Features
 
 [![Features](https://forthebadge.com/images/badges/for-you.svg)]()
 [![](https://forthebadge.com/images/badges/its-not-a-lie-if-you-believe-it.svg)]()
 
-1. The App can sence **1000** different kinds of objects, from `Keyborads` to `Dog Bread`
+1. The App can sense **1000** different kinds of objects, from `Keyborads` to `Dog Bread`
 2. The App has a *Flash* On/Off button, so the app can see clearly at night.
 3. The *Camera Focus* is automatically adjusted, so you don't have to bother to focus any object.
 
@@ -38,7 +38,7 @@ The App is created on top of `Deep Learning` and `Aritificial Neural Networks`.
 [![JAVA](https://forthebadge.com/images/badges/made-with-java.svg)]()
 
 - The App is created for and only for **`Android`**, `2 minutes of silence for other platforms`
-- To power-up the Deepest Neural Network, the App uses **`PyTorch`**
+- To power-up the Deep Neural Network, the App uses **`PyTorch`**
 - Written in *`Shuddh`* **`JAVA`**
 - Uses [**`CameraX`**](https://developer.android.com/training/camerax) to Capture frames
 
